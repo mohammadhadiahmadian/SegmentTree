@@ -26,17 +26,7 @@ public class Project {
             if (Integer.parseInt(string) == 1) {
                 int index = Integer.parseInt(input.next());
                 int x = Integer.parseInt(input.next());
-                SegmentTree.Node p = segmentTree.getRoot();
-                while (p.getStart() != p.getEnd()) {
-                    p.setData(x);
-                    if (index < p.getRight().getStart()) {
-                        p = p.getLeft();
-                    }
-                    else {
-                        p = p.getRight();
-                    }
-                }
-                p.setData(x);
+                new Project().addToTree(segmentTree, index, x);
             }
 
             //Executing instruction of second kind (printing sum a[i] (s <= i <= t))
@@ -59,8 +49,32 @@ public class Project {
                 System.out.format("%d\n", sum);
             }
 
+            //Executing instruction of first kind (adding x to array[i] (s <= i <= t))
+            else {
+                int start = Integer.parseInt(input.next());
+                int end = Integer.parseInt(input.next());
+                int x = Integer.parseInt(input.next());
+                for (int j = start ; j <= end ; j++) {
+                    new Project().addToTree(segmentTree, j, x);
+                }
+            }
+
         }
 
+    }
+
+    public void addToTree(SegmentTree segmentTree, int index, int x) {
+        SegmentTree.Node p = segmentTree.getRoot();
+        while (p.getStart() != p.getEnd()) {
+            p.setData(x);
+            if (index < p.getRight().getStart()) {
+                p = p.getLeft();
+            }
+            else {
+                p = p.getRight();
+            }
+        }
+        p.setData(x);
     }
 
 }
