@@ -8,10 +8,10 @@ public class Project {
         int arrayLength, instructionsCount;
 
         //Getting array length
-        arrayLength = Integer.parseInt(input.next());
+        arrayLength = input.nextInt();
 
         //Getting instructions count
-        instructionsCount = Integer.parseInt(input.next());
+        instructionsCount = input.nextInt();
 
         SegmentTree segmentTree = new SegmentTree(0, arrayLength - 1, 0);
         segmentTree.constructTree(segmentTree.getRoot(), segmentTree.getRoot().getStart(), segmentTree.getRoot().getEnd());
@@ -19,21 +19,18 @@ public class Project {
         //Getting and executing instructions
         for (int i = 0 ; i < instructionsCount ; i++) {
 
-            //Detecting instruction
-            String string = input.next();
-
             //Executing instruction of first kind (adding x to array[i])
-            if (Integer.parseInt(string) == 1) {
-                int index = Integer.parseInt(input.next());
-                int x = Integer.parseInt(input.next());
+            if (input.nextInt() == 1) {
+                int index = input.nextInt();
+                int x = input.nextInt();
                 new Project().addToTree(segmentTree, index, x);
             }
 
             //Executing instruction of second kind (printing sum a[i] (s <= i <= t))
-            else if (Integer.parseInt(string) == 2) {
+            else if (input.nextInt() == 2) {
                 int sum = 0;
-                int start = Integer.parseInt(input.next());
-                int end = Integer.parseInt(input.next());
+                int start = input.nextInt();
+                int end = input.nextInt();
                 for (int j = start ; j <= end ; j++) {
                     SegmentTree.Node p = segmentTree.getRoot();
                     while (p.getStart() != p.getEnd()) {
@@ -51,9 +48,9 @@ public class Project {
 
             //Executing instruction of first kind (adding x to array[i] (s <= i <= t))
             else {
-                int start = Integer.parseInt(input.next());
-                int end = Integer.parseInt(input.next());
-                int x = Integer.parseInt(input.next());
+                int start = input.nextInt();
+                int end = input.nextInt();
+                int x = input.nextInt();
                 for (int j = start ; j <= end ; j++) {
                     new Project().addToTree(segmentTree, j, x);
                 }
