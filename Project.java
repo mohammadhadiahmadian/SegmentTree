@@ -19,15 +19,17 @@ public class Project {
         //Getting and executing instructions
         for (int i = 0 ; i < instructionsCount ; i++) {
 
+            int instruction = input.nextInt();
+
             //Executing instruction of first kind (adding x to array[i])
-            if (input.nextInt() == 1) {
+            if (instruction == 1) {
                 int index = input.nextInt();
                 int x = input.nextInt();
                 new Project().addToTree(segmentTree, index, x);
             }
 
             //Executing instruction of second kind (printing sum a[i] (s <= i <= t))
-            else if (input.nextInt() == 2) {
+            else if (instruction == 2) {
                 int sum = 0;
                 int start = input.nextInt();
                 int end = input.nextInt();
