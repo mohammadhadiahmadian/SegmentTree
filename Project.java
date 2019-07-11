@@ -29,8 +29,42 @@ public class Project {
 
             //Executing instruction of second kind (printing sum array[index] (start <= index <= end))
             else if (instruction == 2) {
-                int result = 0;
-                System.out.println(result);
+                int start = input.nextInt();
+                int end = input.nextInt();
+                int sum = 0;
+                SegmentTree.Node p = new Project().findStartNode(segmentTree.getRoot(), start);
+
+                if (p.getEnd() == end) {
+                    sum += p.getData();
+                }
+
+                else if (p.getEnd() > end) {
+                    sum += new Project().findEndNode(p, end);
+                }
+
+                else {
+                    sum += p.getData();
+                    SegmentTree.Node q = new Project().findStartNode(segmentTree.getRoot(), p.getEnd() + 1);
+
+                    while (true) {
+                        if (q.getEnd() == end) {
+                            sum += q.getData();
+                            break;
+                        }
+
+                        else if (q.getEnd() > end) {
+                            sum += new Project().findEndNode(q, end);
+                            break;
+                        }
+
+                        else {
+                            sum += q.getData();
+                            q = new Project().findStartNode(segmentTree.getRoot(), q.getEnd() + 1);
+                        }
+                    }
+                }
+
+                System.out.println(sum);
             }
 
             //Executing instruction of first kind (adding x to array[index] (start <= index <= end))
@@ -59,6 +93,35 @@ public class Project {
             }
         }
         p.addData(x);
+    }
+
+    public SegmentTree.Node findStartNode(SegmentTree.Node node, int start) {
+        SegmentTree.Node result = node;
+        while (result.getStart() != start) {
+            if (start < result.getRight().getStart()) {
+                result = result.getLeft();
+            }
+            else {
+                result = result.getRight();
+            }
+        }
+        return result;
+    }
+
+    public int findEndNode(SegmentTree.Node node, int end) {
+        SegmentTree.Node q = node;
+        int sum = 0;
+        while (q.getEnd() != end) {
+            if (end > q.getLeft().getEnd()) {
+                sum += q.getLeft().getData();
+                q = q.getRight();
+            }
+            else {
+                q = q.getLeft();
+            }
+        }
+        sum += q.getData();
+        return sum;
     }
 
 }
