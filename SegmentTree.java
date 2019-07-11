@@ -2,8 +2,8 @@ public class SegmentTree {
 
     private Node root;
 
-    public SegmentTree(int start, int end, int data) {
-        this.root = new Node(start, end, data);
+    public SegmentTree(int arrayLength) {
+        this.root = new Node(0, arrayLength - 1);
     }
 
     public class Node {
@@ -11,11 +11,10 @@ public class SegmentTree {
         private int start, end, data;
         private Node right, left;
 
-        Node(int start, int end, int data)
-        {
+        Node(int start, int end) {
             this.start = start;
             this.end = end;
-            this.data = data;
+            this.data = 0;
             this.setRight(null);
             this.setLeft(null);
         }
@@ -48,7 +47,7 @@ public class SegmentTree {
             return this.data;
         }
 
-        public void setData(int x) {
+        public void addData(int x) {
             this.data += x;
         }
 
@@ -60,11 +59,10 @@ public class SegmentTree {
 
     public void constructTree(Node root, int start, int end) {
         if (start != end) {
-            root.setRight(new Node(start + ((end - start) / 2) + 1, end, 0));
-            root.setLeft(new Node(start, start + ((end - start) / 2), 0));
+            root.setLeft(new Node(start, (start + end) / 2));
+            root.setRight(new Node(root.getLeft().getEnd() + 1, end));
             constructTree(root.getRight(), root.getRight().getStart(), root.getRight().getEnd());
             constructTree(root.getLeft(), root.getLeft().getStart(), root.getLeft().getEnd());
         }
     }
-
 }
