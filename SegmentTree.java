@@ -3,7 +3,9 @@ public class SegmentTree {
     private Node root;
 
     public SegmentTree(int arrayLength) {
+
         this.root = new Node(0, arrayLength - 1);
+
     }
 
     public class Node {
@@ -58,7 +60,7 @@ public class SegmentTree {
     }
 
     public void constructTree(Node root, int start, int end) {
-        
+
         if (start != end) {
             root.setLeft(new Node(start, (start + end) / 2));
             root.setRight(new Node(root.getLeft().getEnd() + 1, end));
