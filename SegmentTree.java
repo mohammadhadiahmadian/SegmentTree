@@ -58,11 +58,14 @@ public class SegmentTree {
     }
 
     public void constructTree(Node root, int start, int end) {
+        
         if (start != end) {
             root.setLeft(new Node(start, (start + end) / 2));
             root.setRight(new Node(root.getLeft().getEnd() + 1, end));
             constructTree(root.getRight(), root.getRight().getStart(), root.getRight().getEnd());
             constructTree(root.getLeft(), root.getLeft().getStart(), root.getLeft().getEnd());
         }
+
     }
+
 }
