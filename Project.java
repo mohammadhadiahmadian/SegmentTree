@@ -13,42 +13,27 @@ public class Project {
         //Getting instructions count
         instructionsCount = input.nextInt();
 
-        SegmentTree segmentTree = new SegmentTree(0, arrayLength - 1, 0);
+        SegmentTree segmentTree = new SegmentTree(arrayLength);
         segmentTree.constructTree(segmentTree.getRoot(), segmentTree.getRoot().getStart(), segmentTree.getRoot().getEnd());
 
         //Getting and executing instructions
         for (int i = 0 ; i < instructionsCount ; i++) {
-
             int instruction = input.nextInt();
 
-            //Executing instruction of first kind (adding x to array[i])
+            //Executing instruction of first kind (adding x to array[index])
             if (instruction == 1) {
                 int index = input.nextInt();
                 int x = input.nextInt();
                 new Project().addToTree(segmentTree, index, x);
             }
 
-            //Executing instruction of second kind (printing sum a[i] (s <= i <= t))
+            //Executing instruction of second kind (printing sum array[index] (start <= index <= end))
             else if (instruction == 2) {
-                int sum = 0;
-                int start = input.nextInt();
-                int end = input.nextInt();
-                for (int j = start ; j <= end ; j++) {
-                    SegmentTree.Node p = segmentTree.getRoot();
-                    while (p.getStart() != p.getEnd()) {
-                        if (j < p.getRight().getStart()) {
-                            p = p.getLeft();
-                        }
-                        else {
-                            p = p.getRight();
-                        }
-                    }
-                    sum += p.getData();
-                }
-                System.out.format("%d\n", sum);
+                int result = 0;
+                System.out.println(result);
             }
 
-            //Executing instruction of first kind (adding x to array[i] (s <= i <= t))
+            //Executing instruction of first kind (adding x to array[index] (start <= index <= end))
             else {
                 int start = input.nextInt();
                 int end = input.nextInt();
@@ -65,7 +50,7 @@ public class Project {
     public void addToTree(SegmentTree segmentTree, int index, int x) {
         SegmentTree.Node p = segmentTree.getRoot();
         while (p.getStart() != p.getEnd()) {
-            p.setData(x);
+            p.addData(x);
             if (index < p.getRight().getStart()) {
                 p = p.getLeft();
             }
@@ -73,7 +58,7 @@ public class Project {
                 p = p.getRight();
             }
         }
-        p.setData(x);
+        p.addData(x);
     }
 
 }
